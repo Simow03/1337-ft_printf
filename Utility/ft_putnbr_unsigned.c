@@ -6,11 +6,11 @@
 /*   By: mstaali <mstaali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 13:37:01 by mstaali           #+#    #+#             */
-/*   Updated: 2023/12/03 15:26:49 by mstaali          ###   ########.fr       */
+/*   Updated: 2023/12/03 16:16:09 by mstaali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../ft_printf.h"
 
 int	ft_putnbr_unsigned(unsigned int u)
 {

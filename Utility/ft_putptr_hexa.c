@@ -6,11 +6,11 @@
 /*   By: mstaali <mstaali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 13:28:23 by mstaali           #+#    #+#             */
-/*   Updated: 2023/12/03 15:24:13 by mstaali          ###   ########.fr       */
+/*   Updated: 2023/12/03 16:16:20 by mstaali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../ft_printf.h"
 
 int	ft_putptr_hexa(uintptr_t p)
 {

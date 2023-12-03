@@ -6,11 +6,11 @@
 /*   By: mstaali <mstaali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 13:21:51 by mstaali           #+#    #+#             */
-/*   Updated: 2023/12/03 15:23:22 by mstaali          ###   ########.fr       */
+/*   Updated: 2023/12/03 16:30:19 by mstaali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../ft_printf.h"
 
 int	ft_putstr(char *s)
 {
