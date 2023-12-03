@@ -6,7 +6,7 @@
 /*   By: mstaali <mstaali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 22:57:14 by mstaali           #+#    #+#             */
-/*   Updated: 2023/12/02 23:52:04 by mstaali          ###   ########.fr       */
+/*   Updated: 2023/12/03 01:18:53 by mstaali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,14 @@ int ft_putchar(char c)
 	return (1);
 }
 
-int ft_puthexa(void *p)
+int ft_putptr_hexa(uintptr_t p)
 {
 	int count;
+
+	count = 0;
+	if (p > 15)
+		count += ft_putptr_hexa(p / 16);
+	count += write(1 , &("0123456789abcdef"[p % 16]), 1);
 	return (count);
 }
 
@@ -135,9 +140,11 @@ int	ft_putnbr_hexaupper(int x)
 
 int ft_printf(const char *str, ...)
 {
-	va_list ptr;
+	va_list	ptr;
+	int		len;
+
 	va_start(ptr, str);
-	int len = 0;
+	len = 0;
 	while (*str)
 	{
 		if (*str == '%')
@@ -154,7 +161,7 @@ int ft_printf(const char *str, ...)
 			}
 			else if (*(str + 1) == 'p')
 			{
-				len += ft_puthexa(va_arg(ptr, void *));
+				len += ft_putstr("0x") + ft_putptr_hexa(va_arg(ptr, uintptr_t));
 				str++;
 			}
 			else if (*(str + 1) == 'd' || *(str + 1) == 'i')
@@ -193,6 +200,6 @@ int ft_printf(const char *str, ...)
 
 int main()
 {
-	printf("\n%d",ft_printf("\n%s\tuohgogguo%c\t%d\t%i\t%u\t%x\t%X%%%%", "hi", 'v', -129, -21904, -21, 235, 142));
-	printf("\n%d",printf("\n%s\tuohgogguo%c\t%d\t%i\t%u\t%x\t%X%%%%", "hi", 'v', -129, -21904, -21, 235, 142));
+	printf("\n%d",ft_printf("\n%s\tuohgogguo%c\t%d\t%i\t%u\t%x\t%X%%\t%p", "hi", 'v', -129, -21904, -21, 235, 142, "fivj"));
+	printf("\n%d",printf("\n%s\tuohgogguo%c\t%d\t%i\t%u\t%x\t%X%%\t%p", "hi", 'v', -129, -21904, -21, 235, 142, "fivj"));
 }
