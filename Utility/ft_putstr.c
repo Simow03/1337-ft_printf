@@ -6,7 +6,7 @@
 /*   By: mstaali <mstaali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 13:21:51 by mstaali           #+#    #+#             */
-/*   Updated: 2023/12/03 16:30:19 by mstaali          ###   ########.fr       */
+/*   Updated: 2023/12/03 18:08:30 by mstaali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,13 @@ int	ft_putstr(char *s)
 {
 	int	count;
 
-	count = -1;
-	while (s && s[++count])
-		write(1, &s[count], 1);
+	if (!s)
+		return (ft_putstr("(null)"));
+	count = 0;
+	while (*s)
+	{
+		count += write(1, &(*s), 1);
+		s++;
+	}
 	return (count);
 }
