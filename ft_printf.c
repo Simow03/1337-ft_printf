@@ -5,201 +5,55 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mstaali <mstaali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/29 22:57:14 by mstaali           #+#    #+#             */
-/*   Updated: 2023/12/03 01:18:53 by mstaali          ###   ########.fr       */
+/*   Created: 2023/12/03 13:24:06 by mstaali           #+#    #+#             */
+/*   Updated: 2023/12/03 19:05:19 by mstaali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
-#include <stdio.h>
-#include <unistd.h>
+#include "ft_printf.h"
 
-int ft_putstr(char *s)
-{
-	int count;
-
-	count = -1;
-	while (s && s[++count])
-		write(1, &s[count], 1);
-	return (count);
-}
-
-int ft_putchar(char c)
-{
-	write(1, &c, 1);
-	return (1);
-}
-
-int ft_putptr_hexa(uintptr_t p)
-{
-	int count;
-
-	count = 0;
-	if (p > 15)
-		count += ft_putptr_hexa(p / 16);
-	count += write(1 , &("0123456789abcdef"[p % 16]), 1);
-	return (count);
-}
-
-int	ft_putnbr(int d)
-{
-	long int	nb;
-	int	count_digit;
-	int	temp;
-
-	temp = d;
-	count_digit = 1;
-	while ((temp / 10) != 0)
-	{
-		count_digit++;
-		temp /= 10;
-	}
-	nb = d;
-	if (nb < 0)
-	{
-		write(1 , "-", 1);
-		count_digit++;
-		nb *= -1;
-	}
-	if (nb > 9)
-		ft_putnbr(nb / 10);
-	write(1 , &("0123456789"[nb % 10]), 1);
-	return (count_digit);
-}
-int	ft_putnbr_unsigned(unsigned int u)
-{
-	unsigned int	count_digit;
-	unsigned int	temp;
-	long int		nb;
-
-	temp = u;
-	count_digit = 1;
-	while ((temp / 10) != 0)
-	{
-		count_digit++;
-		temp /= 10;
-	}
-	nb = u;
-	if (nb > 9)
-		ft_putnbr_unsigned(nb / 10);
-	write(1 , &("0123456789"[nb % 10]), 1);
-	return (count_digit);
-}
-
-int	ft_putnbr_hexalower(int x)
-{
-	long int	nb;
-	int	count_digit;
-	int	temp;
-
-	temp = x;
-	count_digit = 1;
-	while ((temp / 16) != 0)
-	{
-		count_digit++;
-		temp /= 16;
-	}
-	nb = x;
-	if (nb < 0)
-	{
-		write(1 , "-", 1);
-		count_digit++;
-		nb *= -1;
-	}
-	if (nb > 15)
-		ft_putnbr_hexalower(nb / 16);
-	write(1 , &("0123456789abcdef"[nb % 16]), 1);
-	return (count_digit);
-}
-
-int	ft_putnbr_hexaupper(int x)
-{
-	long int	nb;
-	int	count_digit;
-	int	temp;
-
-	temp = x;
-	count_digit = 1;
-	while ((temp / 16) != 0)
-	{
-		count_digit++;
-		temp /= 16;
-	}
-	nb = x;
-	if (nb < 0)
-	{
-		write(1 , "-", 1);
-		count_digit++;
-		nb *= -1;
-	}
-	if (nb > 15)
-		ft_putnbr_hexaupper(nb / 16);
-	write(1 , &("0123456789ABCDEF"[nb % 16]), 1);
-	return (count_digit);
-}
-
-int ft_printf(const char *str, ...)
+int	ft_printf(const char *str, ...)
 {
 	va_list	ptr;
 	int		len;
 
+	if (!str)
+		return (0);
 	va_start(ptr, str);
 	len = 0;
 	while (*str)
 	{
 		if (*str == '%')
 		{
-			if (*(str + 1) == 'c')
-			{
+			str++;
+			if (*str == 'c')
 				len += ft_putchar(va_arg(ptr, int));
-				str++;
-			}
-			else if (*(str + 1) == 's')
-			{
+			else if (*str == 's')
 				len += ft_putstr(va_arg(ptr, char *));
-				str++;
-			}
-			else if (*(str + 1) == 'p')
-			{
+			else if (*str == 'p')
 				len += ft_putstr("0x") + ft_putptr_hexa(va_arg(ptr, uintptr_t));
-				str++;
-			}
-			else if (*(str + 1) == 'd' || *(str + 1) == 'i')
-			{
+			else if (*str == 'd' || *str == 'i')
 				len += ft_putnbr(va_arg(ptr, int));
-				str++;
-			}
-			else if (*(str + 1) == 'u')
-			{
+			else if (*str == 'u')
 				len += ft_putnbr_unsigned(va_arg(ptr, int));
-				str++;
-			}
-			else if (*(str + 1) == 'x')
-			{
+			else if (*str == 'x')
 				len += ft_putnbr_hexalower(va_arg(ptr, int));
-				str++;
-			}
-			else if (*(str + 1) == 'X')
-			{
+			else if (*str == 'X')
 				len += ft_putnbr_hexaupper(va_arg(ptr, int));
-				str++;
-			}
-			else if (*(str + 1) == '%')
-			{
-				len++;
-				putchar('%');
-				str++;
-			}
+			else if (*str == '%')
+				len += write(1, "%", 1);
 		}
 		else
 			len += write(1, &(*str), 1);
 		str++;
 	}
+	va_end(ptr);
 	return (len);
 }
-
-int main()
-{
-	printf("\n%d",ft_printf("\n%s\tuohgogguo%c\t%d\t%i\t%u\t%x\t%X%%\t%p", "hi", 'v', -129, -21904, -21, 235, 142, "fivj"));
-	printf("\n%d",printf("\n%s\tuohgogguo%c\t%d\t%i\t%u\t%x\t%X%%\t%p", "hi", 'v', -129, -21904, -21, 235, 142, "fivj"));
-}
+// int main()
+// {
+// 	// printf("\n%d",ft_printf("\n%s\tuohgogguo%c\t%d\t%i\t%u\t%x\t%X%%\t%p", "hi", 'v', -129, -21904, -21, 235, 142, "fivj"));
+// 	// printf("\n%d",printf("\n%s\tuohgogguo%c\t%d\t%i\t%u\t%x\t%X%%\t%p", "hi", 'v', -129, -21904, -21, 235, 142, "fivj"));
+// 	printf("%d\n", ft_printf("%X", -10));
+// 	printf("%d\n", printf("%X", -10));
+// }
