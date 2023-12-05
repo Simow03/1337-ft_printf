@@ -6,7 +6,7 @@
 /*   By: mstaali <mstaali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 13:24:06 by mstaali           #+#    #+#             */
-/*   Updated: 2023/12/05 00:48:27 by mstaali          ###   ########.fr       */
+/*   Updated: 2023/12/05 16:16:40 by mstaali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@ int	ft_checkconv(const char c, va_list ptr)
 	return (len);
 }
 
+int	ft_isflag(const char c)
+{
+	if (c == '+' || c == ' ' || c == '#')
+		return (1);
+	return (0);
+}
+
 int	ft_printf(const char *str, ...)
 {
 	va_list	ptr;
@@ -50,7 +57,10 @@ int	ft_printf(const char *str, ...)
 		if (*str == '%')
 		{
 			str++;
-			len += ft_checkflags(str, ptr);
+			if (ft_isflag(*str))
+				len += ft_checkflags(&str, ptr);
+			else
+				len += ft_checkconv(*str, ptr);
 		}
 		else
 			len += write(1, &(*str), 1);
@@ -58,9 +68,4 @@ int	ft_printf(const char *str, ...)
 	}
 	va_end(ptr);
 	return (len);
-}
-int main()
-{
-	printf("%d\n",ft_printf("%+     #++++x\n", 123));
-	printf("%d\n",printf("%+     #++++x\n", 123));
 }
