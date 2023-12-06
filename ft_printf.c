@@ -6,7 +6,7 @@
 /*   By: mstaali <mstaali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 13:24:06 by mstaali           #+#    #+#             */
-/*   Updated: 2023/12/06 23:05:56 by mstaali          ###   ########.fr       */
+/*   Updated: 2023/12/06 23:21:09 by mstaali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	ft_printf(const char *str, ...)
 		{
 			str++;
 			if (ft_isflag(*str))
-				len += ft_checkflags(&str, ptr);
+				len += ft_checksecflags(&str, ptr);
 			else
 				len += ft_checkconv(*str, ptr);
 		}

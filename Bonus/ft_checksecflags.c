@@ -6,7 +6,7 @@
 /*   By: mstaali <mstaali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 10:33:25 by mstaali           #+#    #+#             */
-/*   Updated: 2023/12/06 23:07:28 by mstaali          ###   ########.fr       */
+/*   Updated: 2023/12/06 23:20:54 by mstaali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int	ft_isspace(const char **str, va_list ptr)
 	return (len);
 }
 
-int	ft_checkflags(const char **str, va_list ptr)
+int	ft_checksecflags(const char **str, va_list ptr)
 {
 	int	len;
 
